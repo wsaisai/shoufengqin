@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			span{
+				display:inline-block;
+				width:30px;
+				height:30px;
+				border:1px solid gray;
+				margin:10px;
+				text-align: center;
+			}
+			.red{
+				background: red;
+				opacity: .6;
+			}
+		</style>
+		<script src="js/jquery-3.1.1.js" ></script>
+		
+	</head>
+	<body>
+		<div id="box"></div>
+		<script>
+//			var box = $('#box');
+////			console.log(#box);
+//			box.html('<span></span><span></span><span></span><span></span><span></span><input type="button" />')
+//			var spans = $('span');
+////			console.log(input);
+//			spans.each(function(index,item){
+//				$(item).attr('index',index).html(index+1)
+//			})
+			creatpage(box,1,5)
+		function creatpage(element,page,allpage){
+			var page = parseInt(page);
+			if(allpage<=5){
+				for(var i =1;i<=5; i++){
+					var span = document.createElement("span");
+					span.setAttribute("data-id",i)
+					span.innerHTML = i;
+					element.appendChild(span);
+					if(span.dataset.id == page){
+						span.className = 'red';
+					}
+				}
+			}
+			//-------跳转--------------
+			var Text1 = document.createElement("input");
+			var btn = document.createElement("input");
+			
+			btn.setAttribute('type','button');
+			btn.value = "跳转";
+			Text1.style.width = "30px";
+			element.appendChild(Text1);
+			element.appendChild(btn);
+			btn.onclick = function(){
+				var value = Text1.value.trim();
+				if(!value||value>allpage||value<1){
+					return;
+				}
+				var page = value;
+				element.innerHTML = '';
+				creatpage(element,page,allpage)
+			}
+			//================================得到所有span
+			var spans = element.getElementsByTagName('span')
+				for(var i =0;i<spans.length; i++){
+					spans[i].onclick = function(){
+						var page = this.dataset.id;
+						element.innerHTML = '';
+						creatpage(element,page,allpage)
+					}
+				}
+			
+			
+			
+		}
+		</script>
+	</body>
+</html>

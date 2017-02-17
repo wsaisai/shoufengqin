@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+
+		#box {
+			width: 400px;
+			height: 300px;
+			background-color: #daf1fa;
+			;
+			/*opacity:.2;*/
+			position:relative;
+			left: 300px;
+			top: 0;
+			transform-style: preserve-3d;
+			perspective:1000px;
+			z-index: 4;
+			transition: 0.6s;
+			overflow-x: hidden;
+			overflow-y: hidden;
+		}
+		
+		#box1 {
+			width: 190px;
+			height: 300px;
+			left: -190px;
+			top: 0;
+			
+			position: absolute;
+			z-index: 100;
+			transition: 0.6s;
+			transform-origin: right;
+			/*transform: rotateY(90deg);*/
+			/*transition: transform 0.4s, opacity 0.1s 0.3s;
+			transition-property: transform, opacity;
+			transition-duration: 0.4s, 0.1s;
+			/*transition-timing-function: initial, initial;*/
+			/*transition-delay: initial, 0.3s;*/*/
+		}
+		
+		#ico {
+			width: 90px;
+			height: 90px;
+			background: orangered;
+			position: absolute;
+			left: 200px;
+			top: 100px;
+			z-index: 555;
+			border-radius: 8px;
+			transition: 0.6s;
+			opacity: 0.8;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+
+	<body>
+		<div id='content'>
+		<div id='box'>
+			<div id="ico"></div>
+			<div id="box1">这是一段文字哈</div>
+		</div>
+		</div>
+		<script>
+			var box = document.getElementById("box")
+			var box1 = document.getElementById("box1")
+			var ico = document.getElementById('ico')
+			var num = 10;
+			box.onmouseover = function() {
+				box1.style.background = "#2c3f52"
+				box1.style.transform = 'rotateY(178deg)'
+				box.style.width = '400px';
+				box.style.left = '350px'
+
+			}
+
+			box.onmouseout = function() {
+				box1.style.transform = 'rotateY(90deg)';
+				box.style.left = '300px';
+				box.style.width = '450px';
+				box.style.transition=0;
+				//				ico.style.left = '180px';
+//				box1.style.background = "";
+
+			}
+		</script>
+	</body>
+figcaption
+</html>

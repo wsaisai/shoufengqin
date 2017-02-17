@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box {
+				width: 300px;
+				height: 300px;
+				border: 1px solid red;
+				margin: 0 auto;
+				position: relative;
+			}
+			
+			.content {
+				position: absolute;
+				/*width:500%;*/
+				left: 0;
+				top: 0;
+				height: 300px;
+			}
+			
+			.content img {
+				position: relative;
+				width: 300px;
+				height: 300px;
+				float: left;
+			}
+			
+			.icon {
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			
+			span {
+				float: left;
+				width: 20px;
+				height: 20px;
+				border-radius: 10px;
+				background: gray;
+				margin-left: 10px;
+			}
+			
+			.red{
+				background-color:red;
+			}
+		</style>
+		<script src="js/jquery-3.1.1.js"></script>
+	</head>
+	<input id="prev" type="button" value="上一页" />
+	<input id="next" type="button" value="下一页" />
+	<div id="box">
+		<div class="content">
+			<img src="img/1.jpg" />
+			<img src="img/2.jpg" />
+			<img src="img/3.jpg" />
+			<img src="img/4.jpg" />
+			<img src="img/5.jpg" />
+		</div>
+		<div class="icon">
+			<span class="red"></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<script>
+		//获取移动的框
+		var content = $('.content');
+		//复制第一张放在content的最后面
+		$('.content img').eq(0).clone().appendTo(content);
+		//获取第一张图片的宽 并且得到左右的总长度
+		var w = $('img').eq(0).width();
+		var  imgs = content.find('img');
+		var len = $('img').length;
+//		console.log(len);
+		//设置content的总长
+		content.width(w * len);
+		var spanAll = $('.icon span');
+
+		function spanstyle(index) {
+			spanAll.removeClass('red').eq(index).addClass('red')
+		}
+		spanAll.mouseover(function(){
+			//如果是正在运动的那么久return;
+			if(content.is(':animated')){
+				return;
+			}
+			var index = $(this).index();
+			//如果 index是我们正在展示的那个 那么retrun
+			if(index === n){
+				return;
+			}
+			//不是和当前图片index对应的隐藏
+			imgs.show().not(":eq(" + index + "),:eq(" + n + ")").hide();
+			spanstyle(index);//			console.log(n,index);
+
+			if(index > n){
+				//先设置为left 0 然后动画拉回到定位position-300
+				content.css('left',0).animate({
+					left:-w
+				})
+			}else{
+				//先设置为-300 然后拉倒定位position- 0
+				content.css('left',-w).animate({
+					left:0
+				})
+			}
+			//这里给n赋值了 所以即使点击下一张或上一张 就以这个n为索引
+			n=index;
+		})
+		var n = 0;
+		$('#prev').click(function() {
+			if(content.is(':animated')) {
+				return;
+			}
+			imgs.show();
+			content.css('left', -n * w);
+			console.log(content.css('left'));
+			n--;
+			 
+			if(n<0){
+				//如果n小于0 瞬间拉倒最后一张
+				content.css('left', -(len - 1) * w)
+//				console.log(-(len - 1) * w);
+				n = len - 2;
+			}
+				//对应的n值得span的颜色
+				spanstyle(n)
+//				console.log(-n * w);
+				content.animate({
+				left: -n * w
+				})
+
+				})
+			$('#next').click(function() {
+			//如果content是运动中 那么会直接return；
+			if(content.is(':animated')) {
+				return;
+			}
+			imgs.show();
+			
+			content.css('left', -n * w);
+			n++;
+			if(n===len-1){
+				spanstyle(0)
+			}else{
+				spanstyle(n)
+			}
+			content.animate({
+				left: -n * w
+			}, function() {
+				//1500就是最后一张了 这是定位
+				if(n == len - 1) {
+					n = 0;
+					content.css('left', -n * w)
+					
+				}
+			})
+		})
+	</script>
+
+	<body>
+	</body>
+
+</html>

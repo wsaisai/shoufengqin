@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box {
+				width: 300px;
+				height: 300px;
+				position: relative;
+				border: 1px solid red;
+				margin: 0 auto;
+				/*overflow: hidden;*/
+			}
+			
+			.ico span {
+				float: left;
+				width: 15px;
+				height: 15px;
+				background-color: #000;
+				opacity: 0.6;
+				border-radius: 10px;
+				margin-left: 10px;
+			}
+			
+			.ico {
+				position: absolute;
+				top: 260px;
+				left: 80px;
+				z-index: 99;
+			}
+			
+			.img img {
+				width: 300px;
+				height: 300px;
+				border: none;
+				vertical-align: top;
+				float: left;
+			}
+			
+			.prev {
+				width: 20px;
+				height: 40px;
+				background-color: red;
+				opacity: 0.6;
+				position: absolute;
+				z-index: 100;
+				top: 100px;
+			}
+			
+			.next {
+				width: 20px;
+				height: 40px;
+				background-color: red;
+				opacity: 0.6;
+				position: absolute;
+				z-index: 100;
+				left: 280px;
+				top: 100px;
+			}
+			
+			.img {
+				position: absolute;
+				left: -300px;
+				top: 0;
+				width: 1800px;
+				height: 300px;
+			}
+		</style>
+		<script src="js/jquery-3.1.1.js"></script>
+	</head>
+
+	<body>
+		<div id="box">
+			<div class="prev"></div>
+			<div class="next"></div>
+			<div class="ico">
+				<span style='background: red;'></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<div class="img">
+				<img src="img/4.jpg" />
+				<div>
+					<img src="img/1.jpg" />
+					<img src="img/2.jpg" />
+					<img src="img/3.jpg" />
+					<img src="img/4.jpg" />
+				</div>
+
+				<img src="img/1.jpg" />
+			</div>
+		</div>
+		<script>
+			var num = 0;
+			var spans = $('.ico span')
+			spans.each(function(index, item) {
+				$(item).attr('index', index)
+			})
+			var imgs = $('.img div img')
+			imgs.each(function(index, item) {
+				$(item).attr('index', index);
+			})
+
+			$('.prev').on('click', function() {
+
+				console.log();
+				$('.img').animate({
+					left: "+=-300"
+				}, {
+					doration: 1000,
+					easing: "linear",
+					complete: function() {
+
+						num++;
+						console.log(num);
+
+						if(num >= 4) {
+							$('.img').css('left', '-300px');
+							num = 0;
+						}
+					}
+				})
+				spans.css('background', "").eq(num).css('background', 'red')
+			})
+			$('.next').on('click', function() {
+				$('.img').animate({
+					left: '+=300'
+				}, {
+					doration: 2000,
+					easing: "linear",
+					complete: function() {
+						num--;
+
+						if(num <= -1) {
+							$('.img').css('left', '-1200px')
+							num = 3;
+						}
+					}
+				})
+			})
+
+			spans.on('click', function() {
+				spans.css('background-color', "")
+				$(this).css('background-color', 'red')
+
+				//				console.log($(this).index());
+				//				console.log(imgs.eq($(this).index()));
+
+				var index = $(this).index()
+				console.log(index);
+				$('.img').animate({
+					left: -(index + 1) * 300 + 'px'
+				})
+
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box {
+				width: 200px;
+				height: 200px;
+				border: 1px solid red;
+				position: relative;
+				left: 200px;
+				top: 200px;
+			}
+			.box{
+				background:red;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-3.1.1.js" ></script>
+	</head>
+
+	<body>
+		<div id='box'>
+
+		</div>
+		<script>
+			var box = document.getElementById("box")
+
+			function getRect(obj) {
+				return obj.getBoundingClientRect();
+			}
+
+			function peng(obj1, obj2) {
+				var obj1Rect = getRect(obj1);
+				var obj2Rect = getRect(obj2);
+
+				//如果obj1碰上了哦obj2返回true，否则放回false
+				var obj1Left = obj1Rect.left;
+				var obj1Right = obj1Rect.right;
+				var obj1Top = obj1Rect.top;
+				var obj1Bottom = obj1Rect.bottom;
+
+				var obj2Left = obj2Rect.left;
+				var obj2Right = obj2Rect.right;
+				var obj2Top = obj2Rect.top;
+				var obj2Bottom = obj2Rect.bottom;
+
+				if(obj1Right < obj2Left || obj1Left > obj2Right || obj1Bottom < obj2Top || obj1Top > obj2Bottom) {
+					return false;
+				} else {
+					return true;
+				}
+
+			}
+			document.onmousemove = function(e) {
+				var div = document.createElement('div')
+				div.style.width="1px";
+//				div.style.height="1px"
+//				div.className=".box"
+//				document.body.appendChild(div)
+//				var target = e.target;
+//				console.log($('.box'));
+//				$('.box').hide()
+//				console.log(peng(div, box));
+			}
+
+			//				box1.onmousedown = function(e) {
+			//
+			//					var disX = e.clientX - box1.offsetLeft;
+			//					var disY = e.clientY - box1.offsetTop;
+			//
+			//					document.onmousemove = function(e) {
+			//
+			//						box.style.left = e.clientX - disX + "px";
+			//						box.style.top = e.clientY - disY + "px";
+			//
+			//						//					实时获取两个元素的具体位置
+			//						var pos1 = box1.getBoundingClientRect();
+			//						var pos2 = box2.getBoundingClientRect();
+			//						console.log(pos1.left);
+			//						if(pos1.right < pos2.left || pos1.left > pos2.right || pos1.bottom < pos2.top || pos1.top > pos2.bottom) { //只要有一个还成立就没碰到
+			//							console.log("没碰着~~");
+			//							box2.style.background = "pink";
+			//						} else {
+			//							console.log("碰瓷~~");
+			//							box2.style.background = "red";
+			//						}
+			//
+			//					}
+			//					document.onmouseup = function() {
+			//						document.onmousemove = null;
+			//					}
+			//					return false;
+			//				}
+			//
+		</script>
+	</body>
+
+</html>

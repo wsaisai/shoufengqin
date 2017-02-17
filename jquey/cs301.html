@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box{
+				width:400px;
+				height:300px;
+				position:relative;
+				left:200px;
+				transform-style: preserve-3d;
+				perspective:1000px;
+				background-color: #daf1fa;
+				/*overflow-x: hidden;
+				overflow-y: hidden;*/
+			}
+			#left{
+				position:absolute;
+				width:200px;
+				height:300px;
+				transition:0.4s;
+				/*background-color:#2c3f52;*/
+				transform-origin: left;
+				transform: rotateY(-90deg);
+				left:0;
+				top:0;
+				z-index:100;
+				color:#fff;
+				font-size:50px;
+			}
+			#right{
+				background-color: #daf1fa;
+				width:300px;
+				height:300px;
+				left:50px;
+				top:0;
+				overflow:hidden;
+				position:absolute;
+				transition:0.4s;
+			}
+			#icon{
+				width:100px;
+				height:100px;
+				background-color:yellow;
+				position:absolute;
+				left:150px;
+				top:100px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div id="left">葵花宝典</div>
+			<div id="right">
+				<div id="icon"></div>
+			</div>
+		</div>
+		<script>
+			var box = document.getElementById("box")
+			var left = document.querySelector("#left")
+			var right = document.querySelector("#right")
+			box.onmousemove = function(){
+				left.style.transform='rotateY(0deg)'
+				right.style.left = '100px'
+				left.style.background ="#2c3f52"
+			}
+			box.onmouseout = function(){
+				left.style.transform='rotateY(-90deg)';
+				right.style.left = '50px';
+				left.style.background ="";
+			}
+		</script>
+	</body>
+</html>

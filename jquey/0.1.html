@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width:200px;
+				height:200px;
+				background-color:red;
+			}
+		</style>
+		<script src="js/jquery-3.1.1.js"></script>
+	</head>
+	<body>
+		<div id ="box">00</div>
+		<script>
+			$(document).on('click',function(){
+				$('div').eq(0).toggle(1000)
+			})
+			var box = document.getElementById("box")
+			console.log(box.innerHTML);
+		</script>
+	</body>
+</html>

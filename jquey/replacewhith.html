@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery-3.1.1.js"></script>
+	</head>
+	<body>
+		<p>hello.world</p>
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<script>
+			$('p').replaceWith('<a href="">hello</a>')
+			$('div').eq(2).replaceWith($('div').eq(0))
+			
+		</script>
+	</body>
+</html>

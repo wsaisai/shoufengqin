@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	
+	<style type="text/css">
+		#box{
+			width: 400px;
+			height: 300px;
+			position: relative;
+			margin: 100px auto;
+			overflow: hidden;
+			background: url(img/4.jpg) no-repeat;
+			background-size: 100% 100%;
+		}
+		#fl{
+			position: absolute;
+			width: 400px;
+			height: 300px;
+			background:deepskyblue;
+			opacity: 0.8;
+			left: -102%;
+		}
+		
+	</style>
+	<body>
+		
+		
+		<div id="box">
+			<span id="fl"></span>
+		</div>
+		
+		
+		<script type="text/javascript">
+			
+			function TestDir(ev,Element){
+			
+				var info = Element.getBoundingClientRect();
+				
+				//元素中心点X轴的位置
+				var X = info.left+(info.width)/2;
+//				console.log(X);
+				//元素中心点Y轴的位置
+				var Y = info.top+(info.height)/2;
+				
+				var obj = {
+					l:info.left,	//[element到可视区left的距离
+					r:info.right,	//[element到可视区right的距离
+					t:info.top,		//element到可视区top的距离
+					b:info.bottom	//element到可视区bottom的距离，
+				}
+//				console.log(obj.l -X,X);
+					
+				var lt = Math.atan2(obj.t-Y,obj.l -X);  
+//				console.log(lt);
+				var rt = Math.atan2(obj.t-Y,obj.r -X);
+//				console.log(rt);
+				var rb = Math.atan2(obj.b-Y,obj.r -X);
+				var lb = Math.atan2(obj.b-Y,obj.l -X);
+				
+				var mp =  Math.atan2(ev.clientY - Y, ev.clientX - X);
+				
+//				 console.log( "弧度:" + mp );
+//				console.log( "角度:" + Math.round(mp* 180/Math.PI)); // 打印出 鼠标移入的点和X轴的夹角的度数
+				
+				
+				var dir = null;
+			
+				if( mp > lt && mp < rt ){
+					dir = "top";
+				}else if( mp > rt && mp < rb  ){
+					dir = "right";
+				}else if( mp > rb && mp < lb ){
+					dir = "bottom";
+				}else{
+					dir = "left";
+				}		
+				
+				var result = {	//判断结果
+					s:ev.type,	//状态，对应移入和移出
+					dir:dir		// 方向 ，对应鼠标移入或者移出的方向
+				}	
+				console.log(result)
+				return result;	
+			}
+
+			box.onmouseenter = function(ev){
+				
+				var obj = TestDir(ev,box,"enter");
+				
+				
+				
+				fl.style.transition = "none";
+				if( obj.dir === "left" || obj.dir === "right" ){
+
+					fl.style.top = "0px";
+					
+					if( obj.dir === "left" ){
+						fl.style.left = "-102%";
+					}else{
+						
+						fl.style.left = "102%";
+					}
+					
+				} else {
+
+					fl.style.left = "0px";
+					
+					if( obj.dir === "top" ){
+						fl.style.top = "-102%";
+					}else{
+						
+						fl.style.top = "102%";
+					}
+					
+				}
+				
+//				setTimeout(function(){
+					fl.style.transition = "300ms ease-in-out";					
+					var dir = obj.dir==="left" || obj.dir === "right" ? "left":"top";
+					fl.style[dir] = "0px"; 
+//				})
+				
+			}
+						
+			box.onmouseleave = function(ev){
+
+				var obj = TestDir(ev,box,"leave");
+				
+				if( obj.dir === "left" ){
+					fl.style.left = "-102%";
+				}
+				if( obj.dir === "right" ){
+					fl.style.left = "102%";
+				}
+				if( obj.dir === "top" ){
+					fl.style.top = "-102%";
+				}
+				if( obj.dir === "bottom" ){
+					
+					fl.style.top = "102%";
+					
+				}
+			}	
+			
+			
+		//atan2()
+		
+		//定义
+		//atan2() 方法 可返回从 x 轴到点 (x,y) 之间的角度。
+		
+		//语法
+		//Math.atan2(y,x)
+		
+		//参数	描述
+		//x	必需。指定点的 X 坐标。
+		//y	必需。指定点的 Y 坐标。
+		
+		//返回值
+		//-PI 到 PI 之间的值，是从 X 轴正向逆时针旋转到点 (x,y) 时经过的角度。
+		
+		//提示和注释
+		//注释：请注意这个函数的参数顺序，Y 坐标在 X 坐标之前传递。				
+					
+			
+			
+		</script>
+	</body>
+</html>

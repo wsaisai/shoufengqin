@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box {
+				width: 700px;
+				height: 240px;
+				border: 1px solid #000;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			#box div {
+				width: 100px;
+				height: 400px;
+				position: absolute;
+				border: 1px solid red;
+				left: 0;
+				top: 0;
+				transition: .4s;
+				border-right:none;
+			}
+			
+			#box .b {
+				width: 200px;
+				z-index: 1000;
+				background-color: #000;
+			}
+			p{
+				width:100px;
+				height:100%;
+				position:absolute;
+				left:0;
+				top:0;
+				background:yellow;
+				margin:0;
+			}
+		</style>
+		<script src="js/jquery-3.1.1.js"></script>
+	</head>
+
+	<body>
+		<div id='box'>
+			<div><p></p></div>
+			<div><p></p></div>
+			<div><p></p></div>
+			<div><p></p></div>
+			<div><p></p></div>
+
+		</div>
+	</body>
+	<script>
+		var divs = document.getElementById("box")
+		var divs = box.getElementsByTagName('div')
+//		console.log(divs);
+		var last = 0;
+		for(var i = 0; i < divs.length; i++) {
+			divs[i].index =i;
+			divs[i].onmouseover= function(){
+				for(var i = 0;i<divs.length; i++){
+					divs[i].style.left = i * 100 + "px";
+					divs[i].style.background = '';
+					divs[i].style.width = '100px';
+					if(i>this.index){
+						divs[i].style.left = i*100+200+'px';
+						divs[this.index].style.width = '300px';
+						divs[this.index].style.background = 'red';
+					}
+					if(i == divs.length-1){
+						
+						divs[i].style.background = 'red';
+						divs[i].style.width = '300px';
+						
+					}
+					
+				}
+				
+			}
+			
+			render(i);
+		}
+
+		function render(i) {
+			divs[0].style.width = '300px';
+			divs[i].style.left = i * 100 + "px";
+			
+		}
+		//		var divs = $('#box div');
+		//		var len = divs.length;
+
+		//		divs.each(function(index,item){
+		//			$(item).attr('index',index)
+		//		})
+		//		
+		//		
+		//		function fn() {
+		//			divs.each(function(index, item) {
+		//				$(item).css('left', index * 100 + "px")
+		//			})
+		//		}
+		//		fn()
+		//		
+		//
+		//		
+		//		divs.on('click',function(){
+		//			divs.css('background',"")
+		//			
+		//			var index = $(this).index();
+		//			
+		//			$('div:gt('+index+')')
+		//			
+		//			
+		//			.animate({
+		//				left : (index*100+200)+'px'
+		//			})
+		//			
+		//			
+		//			$(this).stop().animate({
+		//				width:"200px"
+		//			},400,function(){
+		//				$(this).css('background',"red")
+		//			});
+		//			
+		//			
+		//		})
+		//
+	</script>
+
+</html>

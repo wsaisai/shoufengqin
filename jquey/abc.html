@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box{
+				width:300px;
+				height:300px;
+				border:1px solid red;
+				position:relative;
+				margin:200px;
+				/*overflow: hidden;*/
+			}
+			.move{
+				height:300px;
+				position:absolute;
+				left:0;
+				top:0;
+			}
+			.move img{
+				width:300px;
+				height:300px;
+				float:left;
+			}
+			.icon span{
+				float:left;
+				background:gray;
+				width:20px;
+				height:20px;
+				border-radius: 10px;
+				
+				margin-left:20px;
+			}
+			.icon .red{
+				background:red;
+			}
+		</style>
+		<script src="js/jquery-3.1.1.js" ></script>
+	</head>
+	<body>
+		<input class="prev" type="button"value="上一页"/>
+		<input class="next" type="button"value="下一页"/>
+		<div id="box">
+			<div class='move'>
+				<img src="img/1.jpg"/>
+				<img src="img/2.jpg"/>
+				<img src="img/3.jpg"/>
+				<img src="img/4.jpg"/>
+				<img src="img/5.jpg"/>
+			</div>
+		</div>
+		<div class="icon">
+			<span class="red"></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+		<script>
+			//先获得img的数量和move的宽
+			var move = $('.move')
+			$('img').eq(0).clone().appendTo(move);
+			var img=$('img');
+			var w = img.eq(0).width();
+			var len = img.length;
+			move.width(w*len);
+			//添加翻页点击 
+			var n = 0;
+			$('.next').click(function(){
+				if(move.is(':animated')){
+					return;
+				}
+				//注意这里是事先设置到
+				img.show();
+				move.css('left',-w*n);
+				spanstyle(n);
+				n++;
+				//这里因为n+1了 ，所以move的定位向左走300也就是left每次定位到+负300
+				//animate自动添加动画效果 所以先设置 css样式left的位置 加1 后 下面完成动画效果
+				if(n == len-1){
+					spanstyle(0)
+				}else{
+					spanstyle(n)
+				}
+			
+				move.animate({
+					left: -w*n
+				},function(){
+					if( n==5 ){
+						n = 0;
+//						move.css('left',-w*n);
+					}
+				})
+				
+			})
+			$('.prev').click(function(){
+				if(move.is(":animated")){
+					return;
+				};
+				img.show();
+				move.css('left',-n*w);
+				
+				n--;
+				
+				if(n<0){
+					move.css('left',-w*(len-1));
+					n = len-2;
+				}
+				move.animate({
+					left :-w*n
+				})
+				spanstyle(n)
+			})
+			function spanstyle(index){
+				$('.icon span').removeClass('red').eq(index).addClass('red');
+			}
+			$('.icon span').mousemove(function(){
+				if(move.is(':animated')){
+					return;
+				}
+			
+				var index = $(this).index();
+				//如果n等于我们点击的index 那么return 为什么在这里return
+				if(index ==n){
+					return
+				}
+				//除了点击的这个的图片隐藏
+				img.show().not(':eq('+index+'),:eq('+n+')').hide();
+				
+				spanstyle(index);
+				//这里因为第一次可以理解为 n等于0 所以可以根据indx的变化给n赋值 并且达到 span的点击和input点击的关联
+				if(n<index){
+					move.css('left',0).animate({
+						left:-w
+					})
+				}else{
+					move.css('left',-w).animate({
+						left:0
+					})
+				}
+				//这里通过index赋值给n 所以变点击的时候会延续这个n的值进行加减
+				n=index
+			})
+		</script>
+	</body>
+</html>
